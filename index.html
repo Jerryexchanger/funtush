@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDT Escrow Exchange</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button id="registerButton">Register</button>
+
+    <h1>Login</h1>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button id="loginButton">Login</button>
+
+    <h1>Place a Bid</h1>
+    <input type="text" id="buyerAddress" placeholder="Buyer Address">
+    <input type="text" id="sellerAddress" placeholder="Seller Address">
+    <input type="number" id="bidAmount" placeholder="Bid Amount">
+    <button id="placeBidButton">Place Bid</button>
+
+    <script>
+        // Register User
+        document.getElementById('registerButton').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => alert('User registered successfully!'))
+            .catch(error => alert('Error during registration'));
+        });
+
+        // Login User
+        document.getElementById('loginButton').addEventListener('click', () => {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => alert('Login successful!'))
+            .catch(error => alert('Error during login'));
+        });
+
+        // Place a bid
+        document.getElementById('placeBidButton').addEventListener('click', () => {
+            const buyerAddress = document.getElementById('buyerAddress').value;
+            const sellerAddress = document.getElementById('sellerAddress').value;
+            const bidAmount = document.getElementById('bidAmount').value;
+
+            fetch('/place-bid', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ buyerAddress, sellerAddress, amount: bidAmount })
+            })
+            .then(response => response.json())
+            .then(data => alert('Bid placed successfully!'))
+            .catch(error => alert('Error placing bid'));
+        });
+    </script>
+</body>
+</html>
